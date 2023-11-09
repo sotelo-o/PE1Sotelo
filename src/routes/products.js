@@ -4,10 +4,9 @@ const productsData = require('../models/productsData.js');
 
 // Ruta raíz para listar todos los productos
 router.get('/', (req, res) => {
-  const limit = req.query.limit; // Obtener el valor del parámetro limit de la consulta
+  const limit = req.query.limit;
   const allProducts = productsData.getAllProducts();
 
-  // Aplicar el límite si está presente
   const limitedProducts = limit ? allProducts.slice(0, parseInt(limit, 10)) : allProducts;
 
   res.json(limitedProducts);

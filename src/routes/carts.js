@@ -3,7 +3,6 @@ const router = express.Router();
 const cartsData = require('../models/cartsData.js');
 
 // Ruta raíz para crear un nuevo carrito
-// Ruta raíz para crear un nuevo carrito
 router.post('/', (req, res) => {
   try {
     // Crear un nuevo carrito con array de productos vacío
@@ -40,7 +39,8 @@ router.get('/:cid', (req, res) => {
 router.post('/:cid/product/:pid', (req, res) => {
   try {
     const { cid, pid } = req.params;
-    const quantity = parseInt(req.body.quantity) || 1; // Asegurar que quantity sea un número, por defecto 1
+    const quantity = parseInt(req.body.quantity) || 1;
+
     console.log('cid:', cid);
     // Verificar si el carrito existe
     const cart = cartsData.getCartById(cid);
@@ -53,14 +53,13 @@ router.post('/:cid/product/:pid', (req, res) => {
     const existingProductIndex = cart.products.findIndex((product) => product.id === pid);
 
     if (existingProductIndex !== -1) {
-      // El producto ya existe en el carrito, incrementar la cantidad
+
       cart.products[existingProductIndex].quantity += quantity;
     } else {
-      // El producto no existe en el carrito, agregarlo
+
       cart.products.push({ id: pid, quantity });
     }
 
-    // Guardar la actualización del carrito
     cartsData.saveCartsData(cartsData.getAllCarts());
 
     res.status(200).json({ message: 'Producto agregado al carrito exitosamente', cart });

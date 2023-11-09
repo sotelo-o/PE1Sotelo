@@ -35,7 +35,7 @@ const updateProductById = (productId, updatedProduct) => {
   const productIndex = productsData.findIndex((product) => product.id === productId);
 
   if (productIndex !== -1) {
-    updatedProduct.id = productId; // Asegura que el ID no cambie
+    updatedProduct.id = productId;
     productsData[productIndex] = updatedProduct;
     saveProducts(productsData);
     return updatedProduct;

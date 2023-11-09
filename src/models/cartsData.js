@@ -6,8 +6,6 @@ const cartsFilePath = path.join(__dirname, '../carts.json');
 // Función para agregar un nuevo carrito
 const addCart = (cart) => {
   const carts = getAllCarts();
-  
-  // Generar un ID único basado en la longitud actual del array de carritos
   cart.id = carts.length + 1;
 
   carts.push(cart);
@@ -34,8 +32,6 @@ const getCartById = (cartId) => {
   return cartsData.find((cart) => cart.id === cartId);
 };
 
-
-
 // Función para agregar un producto a un carrito
 const addProductToCart = (cartId, productId, quantity) => {
   const cartsData = getAllCarts();
@@ -45,10 +41,10 @@ const addProductToCart = (cartId, productId, quantity) => {
     const productIndex = cartsData[cartIndex].products.findIndex((product) => product.id === productId);
 
     if (productIndex !== -1) {
-      // El producto ya existe en el carrito, incrementar la cantidad
+
       cartsData[cartIndex].products[productIndex].quantity += quantity;
     } else {
-      // El producto no existe en el carrito, agregarlo
+
       cartsData[cartIndex].products.push({ id: productId, quantity });
     }
 
