@@ -16,23 +16,28 @@ const getProductById = (productId) => {
 };
 
 // Función para agregar un nuevo producto
-const addProduct = (newProduct) => {
-  const productsData = getAllProducts();
-  newProduct.id = generateUniqueId(); // Implementa la lógica para generar un ID único
-  productsData.push(newProduct);
-  saveProductsData(productsData);
-  return newProduct;
+const addProduct = (product) => {
+  const products = getAllProducts();
+  product.id = products.length + 1;
+  products.push(product);
+  saveProducts(products);
+};
+
+
+// Función para guardar productos en el archivo
+const saveProducts = (products) => {
+  fs.writeFileSync(productsFilePath, JSON.stringify(products, null, 2));
 };
 
 // Función para actualizar un producto por ID
-const updateProduct = (productId, updatedProduct) => {
+const updateProductById = (productId, updatedProduct) => {
   const productsData = getAllProducts();
   const productIndex = productsData.findIndex((product) => product.id === productId);
 
   if (productIndex !== -1) {
     updatedProduct.id = productId; // Asegura que el ID no cambie
     productsData[productIndex] = updatedProduct;
-    saveProductsData(productsData);
+    saveProducts(productsData);
     return updatedProduct;
   }
 
@@ -40,27 +45,17 @@ const updateProduct = (productId, updatedProduct) => {
 };
 
 // Función para eliminar un producto por ID
-const deleteProduct = (productId) => {
+const deleteProductById = (productId) => {
   const productsData = getAllProducts();
   const updatedProductsData = productsData.filter((product) => product.id !== productId);
-  saveProductsData(updatedProductsData);
+  saveProducts(updatedProductsData);
   return updatedProductsData;
-};
-
-// Función para guardar datos de productos en el archivo
-const saveProductsData = (data) => {
-  fs.writeFileSync(productsFilePath, JSON.stringify(data, null, 2), 'utf-8');
-};
-
-// Función para generar un ID único
-const generateUniqueId = () => {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
 };
 
 module.exports = {
   getAllProducts,
   getProductById,
   addProduct,
-  updateProduct,
-  deleteProduct,
+  updateProductById,
+  deleteProductById,
 }

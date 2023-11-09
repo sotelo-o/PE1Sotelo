@@ -3,27 +3,38 @@ const path = require('path');
 
 const cartsFilePath = path.join(__dirname, '../carts.json');
 
+// Función para agregar un nuevo carrito
+const addCart = (cart) => {
+  const carts = getAllCarts();
+  
+  // Generar un ID único basado en la longitud actual del array de carritos
+  cart.id = carts.length + 1;
+
+  carts.push(cart);
+  saveCarts(carts);
+};
+
+// Función para guardar carritos en el archivo
+const saveCarts = (carts) => {
+  fs.writeFileSync(cartsFilePath, JSON.stringify(carts, null, 2));
+};
+
 // Función para obtener todos los carritos
 const getAllCarts = () => {
   const cartsData = fs.readFileSync(cartsFilePath, 'utf-8');
+  console.log('Carts Data:', cartsData);
+
   return JSON.parse(cartsData);
 };
 
 // Función para obtener un carrito por ID
 const getCartById = (cartId) => {
   const cartsData = getAllCarts();
+  console.log('All Carts:', cartsData);
   return cartsData.find((cart) => cart.id === cartId);
 };
 
-// Función para crear un nuevo carrito
-const createCart = () => {
-  const cartsData = getAllCarts();
-  const newCartId = generateUniqueId(); // Implementa la lógica para generar un ID único
-  const newCart = { id: newCartId, products: [] };
-  cartsData.push(newCart);
-  saveCartsData(cartsData);
-  return newCart;
-};
+
 
 // Función para agregar un producto a un carrito
 const addProductToCart = (cartId, productId, quantity) => {
@@ -53,14 +64,9 @@ const saveCartsData = (data) => {
   fs.writeFileSync(cartsFilePath, JSON.stringify(data, null, 2), 'utf-8');
 };
 
-// Función para generar un ID único (ejemplo simple)
-const generateUniqueId = () => {
-  return Date.now().toString(36) + Math.random().toString(36).substr(2);
-};
-
 module.exports = {
   getAllCarts,
   getCartById,
-  createCart,
+  addCart,
   addProductToCart,
 };

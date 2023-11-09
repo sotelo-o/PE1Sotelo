@@ -8,7 +8,10 @@
     "status": true,
     "stock": 50,
     "category": "Electrónicos",
-    "thumbnails": ["image1.jpg", "image2.jpg"]
+    "thumbnails": [
+      "image1.jpg",
+      "image2.jpg"
+    ]
   },
   {
     "id": 2,
@@ -19,7 +22,10 @@
     "status": true,
     "stock": 30,
     "category": "Ropa",
-    "thumbnails": ["image3.jpg", "image4.jpg"]
+    "thumbnails": [
+      "image3.jpg",
+      "image4.jpg"
+    ]
   },
   {
     "id": 3,
@@ -30,6 +36,23 @@
     "status": true,
     "stock": 100,
     "category": "Hogar",
-    "thumbnails": ["image5.jpg", "image6.jpg"]
+    "thumbnails": [
+      "image5.jpg",
+      "image6.jpg"
+    ]
+  },
+  {
+    "title": "Producto 4",
+    "description": "Descripción del Producto 4",
+    "code": "P004",
+    "price": 29.99,
+    "status": true,
+    "stock": 100,
+    "category": "Tecnologia",
+    "thumbnails": [
+      "image7.jpg",
+      "image8.jpg"
+    ],
+    "id": 4
   }
 ]

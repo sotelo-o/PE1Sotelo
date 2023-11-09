@@ -26,12 +26,32 @@ router.get('/:pid', (req, res) => {
 
 // Ruta para agregar un nuevo producto
 router.post('/', (req, res) => {
-  const newProduct = req.body;
-  if (newProduct) {
-    const addedProduct = productsData.addProduct(newProduct);
-    res.json(addedProduct);
-  } else {
-    res.status(400).json({ error: 'Datos del producto incompletos' });
+  try {
+    const { id,title, description, code, price, status, stock, category, thumbnails } = req.body;
+
+    // Validar que los campos obligatorios estén presentes
+    if (!title || !description || !code || !price || !status || !stock || !category) {
+      throw new Error('Todos los campos son obligatorios');
+    }
+
+    // Resto de la lógica para agregar un nuevo producto
+    const newProduct = {
+      id,
+      title,
+      description,
+      code,
+      price,
+      status,
+      stock,
+      category,
+      thumbnails: thumbnails || [],
+    };
+
+    productsData.addProduct(newProduct);
+
+    res.status(201).json({ message: 'Producto agregado exitosamente', product: newProduct });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
   }
 });
 
@@ -51,7 +71,7 @@ router.put('/:pid', (req, res) => {
 router.delete('/:pid', (req, res) => {
   const productId = parseInt(req.params.pid);
   productsData.deleteProductById(productId);
-  res.json({ message: 'Producto eliminado exitosamente' });
+  res.json({ message: 'Producto eliminado' });
 });
 
 module.exports = router;
